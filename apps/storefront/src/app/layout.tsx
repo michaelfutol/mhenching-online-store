@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { ResidentChat } from "@/components/ResidentChat";
 import "./globals.css";
 import "./resident-chat.css";
+import "./christmas.css";
 
 const heading = Plus_Jakarta_Sans({
   subsets: ["latin"],
