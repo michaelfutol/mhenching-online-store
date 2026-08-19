@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CartBadge } from "@/components/CartBadge";
 
 export function Header() {
   return (
@@ -23,7 +24,7 @@ export function Header() {
           <Link href="/browse">Shop</Link>
           <Link href="/browse?lane=local">Gawang Magdalena</Link>
           <Link href="/christmas">Christmas World</Link>
-          <Link className="cart-link" href="/cart">Cart <span aria-hidden="true">2</span></Link>
+          <Link className="cart-link" href="/cart">Cart <CartBadge /></Link>
         </nav>
       </div>
     </header>
