@@ -78,15 +78,18 @@ Status: ✅ Done · 🟢 In progress · 🟡 Designed/partially built · ⬜ Not
 
 ---
 
-## M3 — Simplest-Form Admin 🟢 40%
+## M3 — Simplest-Form Admin 🟢 50%
 
 **Goal:** Chingmen/Michael manage the shop without technical knowledge.
 
 Primary flow: **Photo → Name → Price → Stock/availability → Category → Preview → Publish**
 
 - ✅ workflow/spec locked
-- ✅ server-gated `/admin` preview route
+- ✅ shared server gate protects all `/admin/...` routes
 - ✅ preview disabled by default in production
+- ✅ private operations-cockpit home
+- ✅ daily action shortcuts: Add Item / Orders / Payments / Radar
+- ✅ honest blank KPI state rather than fake sales data
 - ✅ phone camera/photo chooser
 - ✅ Quick Add fields
 - ✅ price + stock/capacity
@@ -163,12 +166,15 @@ Primary flow: **Photo → Name → Price → Stock/availability → Category →
 
 ---
 
-## M6 — Admin Analytics ⬜ 10%
+## M6 — Admin Analytics 🟡 20%
 
 Target first screen: Sales today · Orders waiting · Best sellers · Slow movers · Low stock · No-result searches · Best campaign · Estimated gross margin · Pickup/delivery mix.
 
 - ✅ KPI definition drafted
-- ⬜ analytics dashboard
+- ✅ private analytics/operations dashboard shell
+- ✅ explicit `PREVIEW / BLOCKED / LIVE` data-state doctrine
+- ✅ blank KPI state until real persisted data exists
+- ⬜ live sales/orders/stock KPI queries
 - ⬜ product/funnel/campaign performance
 - ⬜ no-result searches + margin
 - ⬜ Gawang Magdalena + Christmas dashboards
@@ -177,7 +183,7 @@ Target first screen: Sales today · Orders waiting · Best sellers · Slow mover
 
 ---
 
-## M7 — Mhenching Radar / Agent Product Finder 🟢 45%
+## M7 — Mhenching Radar / Agent Product Finder 🟢 50%
 
 - ✅ regular Mhenching Product Score
 - ✅ separate Gawang Magdalena score
@@ -188,6 +194,7 @@ Target first screen: Sales today · Orders waiting · Best sellers · Slow mover
 - ✅ fair-maker-economics protection
 - ✅ sourcing/intake workflow formalized in issue #18
 - ✅ physical-stock onboarding state machine designed
+- ✅ Radar scoring/economics rendered inside private admin cockpit using clearly labeled preview candidates
 - ⬜ candidate board/persistence
 - ⬜ supplier/maker registry
 - ⬜ paste/share source URL intake
@@ -203,10 +210,12 @@ Target first screen: Sales today · Orders waiting · Best sellers · Slow mover
 
 ---
 
-## M8 — Lum Admin / MCP 🟡 15%
+## M8 — Lum Admin / MCP 🟡 20%
 
 - ✅ tool/permission philosophy + candidate tool list
 - ✅ audit/approval doctrine
+- ✅ private Lum command-area UX preview in admin cockpit
+- ✅ UI clearly distinguishes disconnected tools from executable actions
 - ⬜ MCP server + service identity/scopes
 - ⬜ products/orders/analytics/Radar read tools
 - ⬜ draft-write tools
@@ -254,10 +263,11 @@ Target first screen: Sales today · Orders waiting · Best sellers · Slow mover
 
 ---
 
-## M10 — Provincial + International Gawang Magdalena ⬜ 15%
+## M10 — Provincial + International Gawang Magdalena ⬜ 18%
 
 - ✅ export-readiness statuses/spec drafted
 - ✅ finished handicrafts prioritized first
+- ✅ GCC export lane captured as a deferred post-MVP research track
 - ⬜ Sorsogon / Philippines shipping
 - ⬜ packaging/weight classes + maker lead times
 - ⬜ real export metadata + English maker stories
@@ -266,18 +276,21 @@ Target first screen: Sales today · Orders waiting · Best sellers · Slow mover
 
 ---
 
-# Current position — 19 Aug 2026
+# Current position — 20 Aug 2026
 
 ### Integrated and CI-green in `main`
 
-- **M0 Foundation:** ✅ 100%
+- **M0 Foundation:** ✅ **100%**
 - **M1 Storefront:** 🟢 **98%**
 - **M2 Backend:** 🟢 **65%**
-- **M3 Quick Add Admin:** 🟢 **40%**
+- **M3 Simplest-Form Admin / Cockpit:** 🟢 **50%**
 - **M5 Checkout/manual payments:** 🟢 **40%**
 - **M5B Resident Attendant:** 🟢 **65%**
-- **M7 Radar/Product Finder:** 🟢 **45%**
+- **M6 Admin Analytics shell:** 🟡 **20%**
+- **M7 Radar/Product Finder:** 🟢 **50%**
+- **M8 Lum Admin/MCP:** 🟡 **20%**
 - **M9 Christmas World:** 🟢 **40%**
+- **M10 Provincial/International:** ⬜ **18%**
 
 ### Critical path to first real revenue
 
