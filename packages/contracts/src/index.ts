@@ -1,8 +1,16 @@
 export type ProductLane = "find" | "local" | "seasonal" | "everyday";
 export type ProductStatus = "draft" | "active" | "archived";
 export type FulfillmentMethod = "pickup" | "local_delivery" | "provincial_delivery";
-export type PaymentMethod = "cash_pickup" | "cash_delivery" | "digital_qr";
-export type PaymentState = "unpaid" | "pending" | "paid" | "failed" | "refunded";
+export type PaymentMethod = "cash_pickup" | "cash_delivery" | "manual_gcash" | "manual_qr";
+export type PaymentState =
+  | "unpaid"
+  | "awaiting_manual_payment"
+  | "submitted_for_verification"
+  | "verified"
+  | "rejected"
+  | "paid"
+  | "failed"
+  | "refunded";
 export type OrderState =
   | "pending_reservation"
   | "reserved"
@@ -87,6 +95,7 @@ export type CreateOrderRequest = {
 export type CreateOrderResponse = {
   orderId: string;
   publicToken: string;
+  humanReference?: string;
   state: OrderState;
   paymentState: PaymentState;
   totalCentavos: number;
@@ -94,6 +103,21 @@ export type CreateOrderResponse = {
     reservationId: string;
     expiresAt?: string;
   };
+};
+
+export type ManualPaymentSubmission = {
+  orderId: string;
+  method: "manual_gcash" | "manual_qr";
+  transactionReference: string;
+  proofAssetId?: string;
+  submittedAt: string;
+};
+
+export type PaymentVerificationDecision = {
+  orderId: string;
+  decision: "verified" | "rejected" | "ask_customer";
+  verifierUserId: string;
+  note?: string;
 };
 
 export type InventoryAvailabilityRequest = {
