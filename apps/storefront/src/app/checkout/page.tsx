@@ -1,15 +1,58 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import type { OrderQuoteResponse } from "@mhenching/contracts";
 import { useCart } from "@/components/CartProvider";
 import { formatPeso, getProduct } from "@/lib/catalog";
 
 export default function CheckoutPage() {
   const { lines } = useCart();
-  const rows = lines
+  const rows = useMemo(() => lines
     .map((line) => ({ product: getProduct(line.slug), quantity: line.quantity }))
-    .filter((row): row is { product: NonNullable<ReturnType<typeof getProduct>>; quantity: number } => Boolean(row.product));
-  const subtotal = rows.reduce((sum, row) => sum + row.product.price * row.quantity, 0);
+    .filter((row): row is { product: NonNullable<ReturnType<typeof getProduct>>; quantity: number } => Boolean(row.product)), [lines]);
+  const previewSubtotal = rows.reduce((sum, row) => sum + row.product.price * row.quantity, 0);
+  const [quote, setQuote] = useState<OrderQuoteResponse | null>(null);
+  const [quoteError, setQuoteError] = useState<string | null>(null);
+  const [quoteLoading, setQuoteLoading] = useState(false);
+
+  useEffect(() => {
+    if (!lines.length) {
+      setQuote(null);
+      setQuoteError(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    setQuoteLoading(true);
+    setQuoteError(null);
+
+    fetch("/api/orders/quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        lines: lines.map((line) => ({ productId: line.slug, quantity: line.quantity })),
+        fulfillmentMethod: "pickup"
+      }),
+      signal: controller.signal
+    })
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data?.message ?? "Unable to verify cart total.");
+        return data as OrderQuoteResponse;
+      })
+      .then((data) => setQuote(data))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setQuote(null);
+        setQuoteError(error instanceof Error ? error.message : "Unable to verify cart total.");
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setQuoteLoading(false);
+      });
+
+    return () => controller.abort();
+  }, [lines]);
 
   if (!rows.length) {
     return (
@@ -95,9 +138,15 @@ export default function CheckoutPage() {
             </div>
           ))}
           <div className="summary-row"><span>Pickup</span><span>Free</span></div>
-          <div className="summary-row summary-row--total"><span>Cart total</span><span>{formatPeso(subtotal)}</span></div>
+          <div className="summary-row"><span>Browser preview</span><span>{formatPeso(previewSubtotal)}</span></div>
+          <div className="summary-row summary-row--total">
+            <span>Server-verified pickup total</span>
+            <span>{quoteLoading ? "Checking…" : quote ? formatPeso(quote.totalCentavos / 100) : "—"}</span>
+          </div>
+          {quoteError ? <div className="summary-note">Could not verify total: {quoteError}</div> : null}
+          {quote ? <div className="summary-note">Verified from canonical server prices. Quote expires at {new Date(quote.quoteExpiresAt).toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit" })}.</div> : null}
           <button className="button" type="button" disabled aria-disabled="true">Place order after live backend gate</button>
-          <div className="summary-note">Production checkout will re-price the cart server-side, reserve stock through the approved bridge where needed, then create the order and selected manual/COD payment workflow.</div>
+          <div className="summary-note">Production checkout will reserve stock through the approved bridge, persist the order, then start the selected manual/COD payment workflow.</div>
           <Link className="soft-button" href="/cart" style={{ width: "100%", marginTop: 10 }}>Back to cart</Link>
         </aside>
       </div>
