@@ -7,6 +7,6 @@
     "dev": "npm --workspace @mhenching/storefront run dev",
     "build": "npm --workspace @mhenching/storefront run build",
     "start": "npm --workspace @mhenching/storefront run start",
-    "typecheck": "npm --workspace @mhenching/storefront run typecheck && npm --workspace @mhenching/contracts run typecheck"
+    "typecheck": "npm --workspace @mhenching/storefront run typecheck && npm --workspace @mhenching/contracts run typecheck && npm --workspace @mhenching/payments run typecheck"
   }
 }
