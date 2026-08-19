@@ -22,7 +22,7 @@ export function Header() {
         <nav className="top-nav" aria-label="Main navigation">
           <Link href="/browse">Shop</Link>
           <Link href="/browse?lane=local">Gawang Magdalena</Link>
-          <Link href="/browse?lane=seasonal">Christmas</Link>
+          <Link href="/christmas">Christmas World</Link>
           <Link className="cart-link" href="/cart">Cart <span aria-hidden="true">2</span></Link>
         </nav>
       </div>
