@@ -1,7 +1,7 @@
 export type ProductLane = "find" | "local" | "seasonal" | "everyday";
 export type ProductStatus = "draft" | "active" | "archived";
 export type FulfillmentMethod = "pickup" | "local_delivery" | "provincial_delivery";
-export type PaymentMethod = "cash_pickup" | "cash_delivery" | "digital_qr";
+export type PaymentMethod = "cash_pickup" | "cash_delivery" | "gcash" | "qrph" | "digital_qr";
 export type PaymentState = "unpaid" | "pending" | "paid" | "failed" | "refunded";
 export type OrderState =
   | "pending_reservation"
@@ -90,6 +90,11 @@ export type CreateOrderResponse = {
   state: OrderState;
   paymentState: PaymentState;
   totalCentavos: number;
+  paymentCheckout?: {
+    provider: "paymongo";
+    sessionId: string;
+    checkoutUrl: string;
+  };
   reservation?: {
     reservationId: string;
     expiresAt?: string;
