@@ -1,0 +1,38 @@
+.qty-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.qty-controls .soft-button {
+  min-width: 42px;
+  padding: 8px 12px;
+}
+
+.text-button {
+  border: 0;
+  background: transparent;
+  color: var(--primary, #173124);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 4px;
+}
+
+.text-button:hover,
+.text-button:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .qty-controls {
+    align-items: stretch;
+  }
+
+  .qty-controls .qty {
+    display: inline-flex;
+    align-items: center;
+  }
+}

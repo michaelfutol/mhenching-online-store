@@ -1,9 +1,29 @@
-import Link from "next/link";
-import { formatPeso } from "@/lib/catalog";
+"use client";
 
-const prototypeTotal = 327;
+import Link from "next/link";
+import { useCart } from "@/components/CartProvider";
+import { formatPeso, getProduct } from "@/lib/catalog";
 
 export default function CheckoutPage() {
+  const { lines } = useCart();
+  const rows = lines
+    .map((line) => ({ product: getProduct(line.slug), quantity: line.quantity }))
+    .filter((row): row is { product: NonNullable<ReturnType<typeof getProduct>>; quantity: number } => Boolean(row.product));
+  const subtotal = rows.reduce((sum, row) => sum + row.product.price * row.quantity, 0);
+
+  if (!rows.length) {
+    return (
+      <div className="shell">
+        <header className="page-title">
+          <div className="eyebrow">Checkout</div>
+          <h1>Your basket is empty.</h1>
+          <p className="muted">Add a product first, then come back here. We keep checkout intentionally quiet and short.</p>
+        </header>
+        <Link className="button" href="/browse">Browse products</Link>
+      </div>
+    );
+  }
+
   return (
     <div className="shell">
       <header className="page-title">
@@ -68,11 +88,16 @@ export default function CheckoutPage() {
 
         <aside className="summary-card" aria-label="Checkout summary">
           <h2>Almost there</h2>
-          <div className="summary-row"><span>Items</span><span>{formatPeso(prototypeTotal)}</span></div>
+          {rows.map(({ product, quantity }) => (
+            <div className="summary-row" key={product.slug}>
+              <span>{quantity} × {product.name}</span>
+              <span>{formatPeso(product.price * quantity)}</span>
+            </div>
+          ))}
           <div className="summary-row"><span>Pickup</span><span>Free</span></div>
-          <div className="summary-row summary-row--total"><span>Prototype total</span><span>{formatPeso(prototypeTotal)}</span></div>
+          <div className="summary-row summary-row--total"><span>Cart total</span><span>{formatPeso(subtotal)}</span></div>
           <button className="button" type="button" disabled aria-disabled="true">Place order after live backend gate</button>
-          <div className="summary-note">Production checkout will create the online order, reserve physical-store-backed stock through the bridge, and then start the selected manual/COD payment workflow.</div>
+          <div className="summary-note">Production checkout will re-price the cart server-side, reserve stock through the approved bridge where needed, then create the order and selected manual/COD payment workflow.</div>
           <Link className="soft-button" href="/cart" style={{ width: "100%", marginTop: 10 }}>Back to cart</Link>
         </aside>
       </div>
