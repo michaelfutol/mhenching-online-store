@@ -1,21 +1,26 @@
-name: Storefront CI
+name: App CI
 
 on:
   pull_request:
     paths:
       - "apps/storefront/**"
+      - "packages/**"
+      - "database/**"
       - "package.json"
       - ".github/workflows/storefront-ci.yml"
   push:
     branches:
       - phase-1-storefront-shell
+      - phase-2-commerce-backend
     paths:
       - "apps/storefront/**"
+      - "packages/**"
+      - "database/**"
       - "package.json"
       - ".github/workflows/storefront-ci.yml"
 
 jobs:
-  verify-storefront:
+  verify-app:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -30,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Typecheck
+      - name: Typecheck storefront and contracts
         run: npm run typecheck
 
       - name: Production build
