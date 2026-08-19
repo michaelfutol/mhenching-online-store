@@ -1,11 +1,6 @@
 # Mhenching Online Store — Milestone Map
 
-**Purpose:** At any point this file must answer:
-
-1. What are we building?
-2. Where are we now?
-3. What is the next gate?
-4. What is blocking a real Christmas launch?
+**Purpose:** At any point this file must answer: what are we building, where are we now, what is the next gate, and what blocks a real Christmas launch?
 
 Status: ✅ Done · 🟢 In progress · 🟡 Designed/partially built · ⬜ Not started · 🔒 External/approval gate
 
@@ -13,54 +8,45 @@ Status: ✅ Done · 🟢 In progress · 🟡 Designed/partially built · ⬜ Not
 
 ## M0 — Product Foundation ✅ 100%
 
-**Goal:** lock product direction, repo boundaries, design language and safety doctrine.
-
 - ✅ dedicated `mhenching-online-store` repository
 - ✅ physical POS remains in separate `mhenching-store-system`
-- ✅ canonical PRD
+- ✅ canonical PRD + data model + architecture
 - ✅ Quiet Commerce / Quiet Tropical Morning design system
-- ✅ Stitch reference constrained by PRD/architecture
+- ✅ Stitch references constrained by product rules
 - ✅ POS Inventory Bridge contract
-- ✅ online commerce data model
-- ✅ ADR: POS and online store remain separate
-- ✅ `AGENTS.md` guardrails
+- ✅ ADR + `AGENTS.md` guardrails
 - ✅ Overkill-underneath / Simplest-form-on-top doctrine
 
 **Gate:** passed.
 
 ---
 
-## M1 — Storefront Shell 🟢 90%
+## M1 — Storefront Shell 🟢 98%
 
 **Goal:** beautiful mobile-first shopping shell independent of production data.
 
-Integrated into `main`.
-
 - ✅ Next.js storefront
-- ✅ Home
-- ✅ Browse/Search
-- ✅ Product Detail
-- ✅ Cart visual flow
-- ✅ Checkout visual flow
-- ✅ empty/not-found states
-- ✅ Mhenching Finds
-- ✅ Gawang Magdalena
+- ✅ Home / Browse / Search / Product Detail
+- ✅ Mhenching Finds / Gawang Magdalena / Christmas lanes
+- ✅ interactive persistent browser cart
+- ✅ Add to Cart from product pages
+- ✅ live header cart count
+- ✅ quantity +/- / remove / clear cart
+- ✅ empty cart state
+- ✅ checkout reflects actual cart contents
 - ✅ responsive Quiet Commerce styling
 - ✅ reduced-motion basics
-- ✅ CI: TypeScript + production build
-- ✅ global resident-attendant mount
-- ⬜ interactive persistent cart
+- ✅ resident attendant mounted globally
+- ✅ CI: strict TypeScript + production build
 - ⬜ real-device visual QA / final Stitch comparison
 
-**Next gate:** interactive cart + mobile/desktop visual acceptance.
+**Next gate:** mobile + desktop visual acceptance on real devices.
 
 ---
 
-## M2 — Online Commerce Backend 🟢 50%
+## M2 — Online Commerce Backend 🟢 65%
 
 **Goal:** standalone online commerce backend with no direct POS database access.
-
-Foundation integrated into `main`.
 
 - ✅ backend architecture plan
 - ✅ public catalog / private commerce boundary
@@ -71,34 +57,39 @@ Foundation integrated into `main`.
 - ✅ delivery-zone model
 - ✅ shared TypeScript contracts
 - ✅ order state machine
-- ✅ CI coverage for contracts
+- ✅ `CatalogRepository` interface
+- ✅ current static catalog repository adapter
+- ✅ canonical server-side quote service
+- ✅ server-side product price reload; browser price is not trusted
+- ✅ unavailable product / quantity validation
+- ✅ `POST /api/orders/quote`
+- ✅ checkout consumes server-verified pickup quote
+- ✅ CI coverage for contracts + storefront/build
 - ⬜ dedicated online Supabase project
 - ⬜ applied/reviewed migrations
-- ⬜ catalog repository implementation
-- ⬜ quote service
-- ⬜ order service
-- ⬜ API route handlers
-- ⬜ unit/integration tests
+- ⬜ Supabase catalog repository
+- ⬜ real delivery-zone repository/fees
+- ⬜ persistent order service
+- ⬜ `POST /api/orders`
+- ⬜ order-status/cancel routes
+- ⬜ unit/integration tests around persistence/idempotency
 
-**Hard gate:** 🔒 create/select a **separate online Supabase project**; never reuse the physical POS database. Tracked in issue #17.
+**Hard gate:** 🔒 create a **separate online Supabase project**; never reuse the physical POS database. Tracked in issue #17.
 
 ---
 
 ## M3 — Simplest-Form Admin 🟢 40%
 
-**Goal:** Chingmen/Michael manage the shop without needing technical knowledge.
+**Goal:** Chingmen/Michael manage the shop without technical knowledge.
 
-Primary flow:
-
-**Photo → Name → Price → Stock/availability → Category → Preview → Publish**
+Primary flow: **Photo → Name → Price → Stock/availability → Category → Preview → Publish**
 
 - ✅ workflow/spec locked
 - ✅ server-gated `/admin` preview route
 - ✅ preview disabled by default in production
 - ✅ phone camera/photo chooser
-- ✅ Quick Add Item fields
-- ✅ price entry
-- ✅ stock/capacity entry
+- ✅ Quick Add fields
+- ✅ price + stock/capacity
 - ✅ availability: in-store / online-only / made-to-order / consignment
 - ✅ lane/category selection
 - ✅ deterministic description suggestion
@@ -106,14 +97,11 @@ Primary flow:
 - ✅ live customer-card preview
 - ⬜ Supabase authentication + staff roles
 - ⬜ real photo upload/storage
-- ⬜ real Create Draft
-- ⬜ Preview → Publish
+- ⬜ real Create Draft / Preview → Publish
 - ⬜ edit/duplicate/bulk updates
 - ⬜ supplier/maker/provenance/economics advanced fields
 
 **Dependency:** M2 online DB/auth/storage.
-
-**Exit gate:** a nontechnical operator can publish a real product from a phone in roughly one minute.
 
 ---
 
@@ -123,225 +111,157 @@ Primary flow:
 
 - ✅ integration contract drafted
 - ⬜ POS-side availability service
-- ⬜ atomic reservation
-- ⬜ reservation expiry/release
+- ⬜ atomic reservation + expiry/release
 - ⬜ confirmation/commit
-- ⬜ idempotency implementation
-- ⬜ audit log
-- ⬜ reconciliation
+- ⬜ idempotency + audit + reconciliation
 - ⬜ degraded mode
 - ⬜ sandbox integration tests
 
 **Hard rule:** ecommerce never writes directly to POS stock tables.
 
-**Exit gate:** simultaneous online orders cannot oversell the final unit and website failure cannot stop physical sales.
-
 ---
 
-## M5 — Checkout, Manual Payment & Local Fulfillment 🟢 35%
+## M5 — Checkout, Manual Payment & Local Fulfillment 🟢 40%
 
-**Goal:** complete a real Sta. Magdalena order without percentage-cut payment gateways.
-
-### MVP payment rails
-
-- ✅ Cash on Pickup selected
-- ✅ COD policy selected for approved local zones, initially Magdalena Poblacion
-- ✅ Manual GCash selected
-- ✅ Official manual QR selected
+- ✅ Cash on Pickup
+- ✅ COD policy for approved local zones, initially Magdalena Poblacion
+- ✅ Manual GCash + official manual QR
 - ✅ screenshot-is-not-proof rule
-- ✅ payment verification state model/contracts
+- ✅ payment verification states/contracts
 - ✅ review-only manual-payment schema addendum
-- ✅ checkout UI aligned with manual GCash/QR/COD policy
+- ✅ interactive cart → checkout
+- ✅ server-verified pickup quote
 - ⬜ real guest-order submission
-- ⬜ official GCash/QR admin configuration
-- ⬜ payment-reference submission
-- ⬜ private proof upload
+- ⬜ official GCash/QR admin config
+- ⬜ payment-reference + private proof upload
 - ⬜ staff Verify / Reject / Ask Customer queue
 - ⬜ COD collection reconciliation
 - ⬜ order confirmation/status
-- ⬜ delivery-zone fees
-- ⬜ staff order board
+- ⬜ delivery-zone fees + staff order board
 
-**Dependencies:** M2 database + M4 bridge for physical-stock-backed products.
-
-**Exit gate:** one real local order reaches completed pickup/delivery with correct stock and payment reconciliation.
+**Dependencies:** M2 database + M4 bridge for physical-store-backed products.
 
 ---
 
 ## M5B — Resident Customer Attendant 🟢 65%
 
-**Goal:** an always-available calm front desk that helps without hallucinating operational facts.
-
-Integrated into `main`.
-
-- ✅ global chat widget
-- ✅ resident API route
-- ✅ catalog retrieval
-- ✅ budget gift queries
-- ✅ Christmas discovery
-- ✅ Gawang Magdalena discovery
-- ✅ payment-policy answers
-- ✅ delivery/pickup answers
-- ✅ sensitive-case detection
-- ✅ human-handoff flag
+- ✅ global `Ask Mhenching` widget + API
+- ✅ catalog/product retrieval
+- ✅ budget gift / Christmas / Gawang Magdalena discovery
+- ✅ payment-policy + pickup/delivery answers
+- ✅ sensitive-case detection + human-handoff flag
 - ✅ no paid model required for v1
-- ✅ future Ollama/model role documented
-- ⬜ live order-status tool with verified lookup
-- ⬜ actual human handoff queue/inbox
-- ⬜ conversation persistence + privacy/retention controls
+- ✅ future Ollama/Intern Lum role documented
+- ⬜ live verified order-status tool
+- ⬜ human handoff queue/inbox
+- ⬜ conversation persistence + privacy/retention
 - ⬜ live payment-state tool
 - ⬜ Intern Lum classifier/paraphraser evaluation
-- ⬜ Messenger/other channel integration later
+- ⬜ Messenger/other channels later
 
-**Doctrine:** LLM may interpret/draft; tools remain source of truth for stock, payment and orders.
-
-**Exit gate:** common customer questions are answered correctly 24/7 and sensitive cases reach a human with context.
+**Doctrine:** models may interpret/draft; tools remain source of truth for stock, payments and orders.
 
 ---
 
 ## M6 — Admin Analytics ⬜ 10%
 
-**Goal:** first screen tells management what needs attention.
-
-Target first screen:
-
-- Sales today
-- Orders waiting
-- Best sellers
-- Slow movers
-- Low stock
-- Searches with no result
-- Best-converting campaign
-- Estimated gross margin
-- pickup/delivery mix
+Target first screen: Sales today · Orders waiting · Best sellers · Slow movers · Low stock · No-result searches · Best campaign · Estimated gross margin · Pickup/delivery mix.
 
 - ✅ KPI definition drafted
 - ⬜ analytics dashboard
-- ⬜ product performance
-- ⬜ funnel conversion
-- ⬜ campaign attribution
-- ⬜ no-result searches
-- ⬜ margin/profitability
-- ⬜ Gawang Magdalena performance
-- ⬜ Christmas dashboard
+- ⬜ product/funnel/campaign performance
+- ⬜ no-result searches + margin
+- ⬜ Gawang Magdalena + Christmas dashboards
 
 **Dependency:** live order/event data from M2/M5.
 
 ---
 
-## M7 — Mhenching Radar / Agent Product Finder 🟢 40%
+## M7 — Mhenching Radar / Agent Product Finder 🟢 45%
 
-**Goal:** continuously discover cheap, meaningful, locally relevant products and local makers.
-
-- ✅ Mhenching Product Score framework
-- ✅ separate Gawang Magdalena scoring philosophy
+- ✅ regular Mhenching Product Score
+- ✅ separate Gawang Magdalena score
 - ✅ deterministic weighted scoring package
-- ✅ landed-cost calculator
-- ✅ gross contribution / margin / markup calculation
-- ✅ `TEST_NOW / SAMPLE_WATCH / WEAK_MAYBE / IGNORE` recommendations
+- ✅ landed cost / gross contribution / margin / markup
+- ✅ `TEST_NOW / SAMPLE_WATCH / WEAK_MAYBE / IGNORE`
 - ✅ default 3–5 unit test guidance
-- ✅ fair-maker-economics protection for local goods
-- ✅ strict TypeScript CI
-- ✅ architecture documentation
+- ✅ fair-maker-economics protection
+- ✅ sourcing/intake workflow formalized in issue #18
+- ✅ physical-stock onboarding state machine designed
 - ⬜ candidate board/persistence
 - ⬜ supplier/maker registry
+- ⬜ paste/share source URL intake
+- ⬜ supplier/wholesale feed ingestion
 - ⬜ internal unmet-search signals
-- ⬜ supplier/wholesale ingestion
 - ⬜ local maker submissions
 - ⬜ trend research connectors
-- ⬜ test-drop sales/content feedback
-- ⬜ price watch
+- ⬜ received/QA/photo/listing workflow implementation
+- ⬜ test-drop feedback + price watch
 - ⬜ human purchase approval workflow
 
-**Hard rule:** agent may recommend/draft; it cannot autonomously buy inventory.
+**Hard rule:** agent may research, score and draft; it cannot autonomously buy inventory.
 
 ---
 
 ## M8 — Lum Admin / MCP 🟡 15%
 
-**Goal:** authorized Lum/agents operate Mhenching through scoped tools, never raw database superpowers.
-
-- ✅ tool/permission philosophy documented
-- ✅ candidate tool list documented
+- ✅ tool/permission philosophy + candidate tool list
 - ✅ audit/approval doctrine
-- ⬜ MCP server
-- ⬜ service identity/scopes
-- ⬜ read tools: products/orders/analytics/Radar
+- ⬜ MCP server + service identity/scopes
+- ⬜ products/orders/analytics/Radar read tools
 - ⬜ draft-write tools
 - ⬜ elevated publish/price/order tools
 - ⬜ rate limits/audit trail
 - ⬜ Work/Codex connection test
 
-**Exit gate:** Lum can safely inspect and perform approved admin workflows with attributable writes.
-
 ---
 
 ## M8A — Local LLM Intern / Ollama 🟡 15%
 
-**Goal:** small local model handles junior repetitive work under Lum/human supervision.
-
-- ✅ role and limits defined
-- ✅ RAG + approved examples + correction/eval learning model defined
-- ✅ suitable responsibilities defined
+- ✅ role/limits defined
+- ✅ RAG + approved examples + correction/eval learning model
+- ✅ responsibilities defined
 - ⬜ Ollama model installed/benchmarked
-- ⬜ Mhenching knowledge pack
-- ⬜ eval suite
-- ⬜ classifier/product-copy tasks
-- ⬜ admin-summary tasks
+- ⬜ Mhenching knowledge pack + eval suite
+- ⬜ classification/product-copy/admin-summary tasks
 - ⬜ escalation confidence rules
-
-**Initial role:** classification, normalization, draft copy, candidate prescoring, conversation handoff summaries.
 
 ---
 
 ## M9 — Paskong Mhenching 2026 Golden Launch 🟢 40%
 
-**Goal:** first grand public launch and first end-to-end commercial validation.
-
 ### Experience
-
-- ✅ dedicated `/christmas` Christmas World page
-- ✅ gentle falling snow
-- ✅ tiny multicolored softly blinking lights
-- ✅ Gentle / Off magic control
-- ✅ reduced-motion behavior
-- ✅ mobile density reduction
+- ✅ dedicated `/christmas` Christmas World
+- ✅ gentle snow + tiny multicolored softly blinking lights
+- ✅ Gentle / Off control
+- ✅ reduced-motion + mobile density safeguards
 - ✅ no Santa/reindeer/noisy effects
-- ✅ Quiet Commerce identity preserved
-- ✅ budget-discovery entry cards
+- ✅ budget-discovery cards
 - ✅ Gawang Magdalena Christmas story lane
 - ⬜ real photographer product imagery
 - ⬜ final Christmas UI/UX visual QA
 
 ### Commerce
-
 - ⬜ scout ~100 candidates
 - ⬜ shortlist/score with Radar
 - ⬜ 3–5 unit test drops
-- ⬜ under ₱100 / ₱200 / ₱300 real collections
-- ⬜ bundles / mystery boxes
+- ⬜ real Under ₱100 / ₱200 / ₱300 collections
+- ⬜ bundles/mystery boxes
 - ⬜ campaign attribution
 - ⬜ real checkout/fulfillment
 - ⬜ sell-through analytics
-- ⬜ Gawang Magdalena Christmas collection with real makers
-
-**Exit gate:** Christmas customers can discover, order, pay/receive, and the team can tell which products/content actually generated profitable demand.
+- ⬜ real-maker Gawang Magdalena Christmas collection
 
 ---
 
 ## M10 — Provincial + International Gawang Magdalena ⬜ 15%
 
-**Goal:** expand eligible local goods beyond Sta. Magdalena without compromising maker economics/compliance.
-
 - ✅ export-readiness statuses/spec drafted
 - ✅ finished handicrafts prioritized first
-- ⬜ Sorsogon Province shipping
-- ⬜ Philippines-wide shipping
-- ⬜ packaging/weight classes
-- ⬜ maker lead times
-- ⬜ real export-ready metadata
-- ⬜ English maker stories
-- ⬜ commodity/country compliance checks
+- ⬜ Sorsogon / Philippines shipping
+- ⬜ packaging/weight classes + maker lead times
+- ⬜ real export metadata + English maker stories
+- ⬜ destination/commodity compliance checks
 - ⬜ first verified international-ready SKU
 
 ---
@@ -351,21 +271,23 @@ Target first screen:
 ### Integrated and CI-green in `main`
 
 - **M0 Foundation:** ✅ 100%
-- **M1 Storefront shell:** 🟢 90%
-- **M2 Backend contracts/schema foundation:** 🟢 50%
-- **M3 Quick Add UX preview:** 🟢 40%
-- **M5 manual-payment/checkout foundation:** 🟢 35%
-- **M5B Resident Attendant v1:** 🟢 65%
-- **M7 Radar scoring/economics engine:** 🟢 40%
-- **M9 Christmas World experience foundation:** 🟢 40%
+- **M1 Storefront:** 🟢 **98%**
+- **M2 Backend:** 🟢 **65%**
+- **M3 Quick Add Admin:** 🟢 **40%**
+- **M5 Checkout/manual payments:** 🟢 **40%**
+- **M5B Resident Attendant:** 🟢 **65%**
+- **M7 Radar/Product Finder:** 🟢 **45%**
+- **M9 Christmas World:** 🟢 **40%**
 
-### Critical path to real Christmas launch
+### Critical path to first real revenue
 
-**Create separate online Supabase → M2 live APIs → M3 real auth/save/publish → M4 POS bridge → M5 real local order/payment → M6 analytics → stock real Christmas products/photos → final QA → launch.**
+**Dedicated online Supabase → real catalog/admin persistence → real order creation → POS stock bridge → manual GCash/COD fulfillment → analytics → real product photos/stock → Christmas campaigns → measured sales.**
 
-### One external gate right now
+### External gate
 
-🔒 **Issue #17:** create the dedicated online Supabase project before persisting users, products, orders, payment proofs, chat handoffs or admin writes.
+🔒 **Issue #17:** create the dedicated Mhenching Online Supabase project before persisting users, products, orders, payment proofs, chat handoffs or admin writes.
+
+The existing physical `Mhenching Store System` Supabase project remains separate and must not be reused.
 
 # Development doctrine
 
