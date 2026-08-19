@@ -1,8 +1,10 @@
 import { AdminRadarPreview } from "@/components/AdminRadarPreview";
+import { PreliminaryStockIntake } from "@/components/PreliminaryStockIntake";
 import { QuickAddPreview } from "@/components/QuickAddPreview";
 
 const primaryActions = [
   { href: "#quick-add", label: "Add Item", detail: "Photo → name → price → stock → preview", state: "READY" },
+  { href: "#stock-intake", label: "Batch Stock", detail: "Paste many preliminary items and normalize them", state: "PREVIEW" },
   { href: "#operations", label: "Orders", detail: "Order board arrives with persistent backend", state: "BLOCKED" },
   { href: "#operations", label: "Payments", detail: "Manual GCash / QR verification queue", state: "BLOCKED" },
   { href: "#radar", label: "Radar", detail: "Score candidates before spending working capital", state: "PREVIEW" }
@@ -11,9 +13,9 @@ const primaryActions = [
 const readiness = [
   ["Storefront", "98%", "Browse → cart → verified quote"],
   ["Online backend", "65%", "Waiting on dedicated Supabase"],
-  ["Quick Add", "40%", "UX ready; persistence blocked"],
+  ["Admin cockpit", "55%", "Quick Add + batch intake UX ready"],
   ["Resident attendant", "65%", "Catalog/policy answers + handoff"],
-  ["Radar", "45%", "Scoring/economics live; intake next"],
+  ["Radar", "50%", "Scoring/economics live; persistence next"],
   ["Christmas World", "40%", "Ambient experience built"]
 ];
 
@@ -39,6 +41,7 @@ export default function AdminPreviewPage() {
         <nav className="admin-jumpbar" aria-label="Admin sections">
           <a href="#today">Today</a>
           <a href="#quick-add">Add Item</a>
+          <a href="#stock-intake">Batch Stock</a>
           <a href="#radar">Radar</a>
           <a href="#lum-admin">Lum</a>
           <a href="#readiness">Milestones</a>
@@ -82,12 +85,26 @@ export default function AdminPreviewPage() {
           <div className="admin-panel-heading">
             <div>
               <span className="admin-kicker">Simplest-form admin</span>
-              <h2>Add an item without learning the system underneath.</h2>
+              <h2>Add one item without learning the system underneath.</h2>
             </div>
             <span className="admin-status admin-status-ready">UX READY</span>
           </div>
           <p className="admin-muted">Photo, name, price, availability, category, preview. Real Save/Publish unlocks after Auth + Storage + catalog persistence.</p>
           <QuickAddPreview />
+        </section>
+
+        <section className="admin-panel" id="stock-intake">
+          <div className="admin-panel-heading">
+            <div>
+              <span className="admin-kicker">Preliminary stock intake</span>
+              <h2>Paste a shelf list. Let the system clean it up.</h2>
+            </div>
+            <span className="admin-status admin-status-preview">PREVIEW</span>
+          </div>
+          <p className="admin-muted">
+            This is the fast path for real Mhenching stock: type or paste many item lines from a shelf count, trip purchase, receipt, or inventory note. The parser validates price/quantity and prepares clean rows without publishing anything.
+          </p>
+          <PreliminaryStockIntake />
         </section>
 
         <AdminRadarPreview />
