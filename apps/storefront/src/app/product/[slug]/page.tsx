@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductVisual } from "@/components/ProductVisual";
+import { AddToCartButton } from "@/components/AddToCartButton";
 import { formatPeso, getProduct, products } from "@/lib/catalog";
 
 type Params = Promise<{ slug: string }>;
@@ -63,7 +64,8 @@ export default async function ProductPage({ params }: { params: Params }) {
             </div>
 
             <div className="product-actions">
-              <Link className="button" href="/cart">Add to prototype cart</Link>
+              <AddToCartButton slug={product.slug} disabled={product.stock === "out_of_stock"} />
+              <Link className="soft-button" href="/cart">View cart</Link>
               <Link className="soft-button" href="/browse">Keep browsing</Link>
             </div>
 
