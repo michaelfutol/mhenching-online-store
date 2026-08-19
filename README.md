@@ -20,6 +20,19 @@ Mhenching Online is not intended to be a mini-Shopee or a generic dropshipping s
 - pickup and local delivery;
 - later, Sorsogon-wide shipping and international sales for suitable native/handmade products.
 
+## Development status
+
+The canonical progress tracker is **[`MILESTONES.md`](MILESTONES.md)**. It records each milestone, status, acceptance/exit gate and the current next priority.
+
+Current position:
+
+- **Milestone 0 — Product Foundation:** complete
+- **Milestone 1 — Storefront Shell:** CI-green, review/merge stage
+- **Milestone 2 — Online Commerce Backend:** contract/schema foundation in progress
+- **Next operational priority:** Simplest-form Admin + real online backend APIs, followed by the isolated POS Inventory Bridge
+
+Development doctrine: **Overkill underneath. Simplest form on top.** See `docs/product/BUILD_DOCTRINE.md`.
+
 ## Experience principle: Quiet Commerce
 
 The storefront should feel refreshing, calm, warm, local, trustworthy, contemporary, affordable, and quietly delightful. It should invite discovery rather than pressure customers with visual noise, fake scarcity, countdown timers, or aggressive sale mechanics.
@@ -57,11 +70,12 @@ Those remain in the separate `mhenching-store-system` repository.
 ## Source-of-truth hierarchy
 
 1. `docs/product/PRD.md` — what the product must do.
-2. `docs/architecture/` — system boundaries, contracts, data ownership and invariants.
-3. `docs/decisions/` — architecture decision records.
-4. `docs/design/STITCH_DESIGN.md` — visual system and design intent.
-5. Stitch-generated HTML/screens — reference implementations only.
-6. Application code — implementation of the above.
+2. `MILESTONES.md` — where development currently stands.
+3. `docs/architecture/` — system boundaries, contracts, data ownership and invariants.
+4. `docs/decisions/` — architecture decision records.
+5. `docs/design/STITCH_DESIGN.md` — visual system and design intent.
+6. Stitch-generated HTML/screens — reference implementations only.
+7. Application code — implementation of the above.
 
 If generated UI conflicts with the PRD or an invariant, the PRD/invariant wins.
 
@@ -121,20 +135,14 @@ packages/
 integrations/
   pos-bridge/             # client/adapter for physical-store inventory bridge
 docs/
-  product/                # PRD, terminology, success metrics
-  architecture/           # boundaries, data model, API/inventory bridge
+  product/                # PRD, doctrine, success metrics
+  architecture/           # boundaries, data model, MCP/Radar, API/inventory bridge
   design/                 # canonical visual guidance + Stitch design system
   roadmap/                # delivery plan
   decisions/              # ADRs
 reference/
   stitch/                 # exported Stitch references, non-authoritative
 ```
-
-## Status
-
-**Foundation / pre-implementation.**
-
-The PRD, repository boundaries, Stitch design references and POS integration contract are being established before production code so the physical-store POS remains protected.
 
 ## Safety rule
 
