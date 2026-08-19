@@ -8,7 +8,7 @@ const quickLinks = [
   ["Under ₱100", "/browse?q=under-100"],
   ["Under ₱200", "/browse?q=under-200"],
   ["For Home", "/browse?q=home"],
-  ["Christmas", "/browse?lane=seasonal"]
+  ["Christmas World", "/christmas"]
 ] as const;
 
 export default function HomePage() {
@@ -31,6 +31,7 @@ export default function HomePage() {
               <div className="eyebrow">A little Christmas magic</div>
               <h2>Giftable. Useful. Not expensive.</h2>
               <p>We will test tiny batches first, learn what Magdalena actually wants, then scale only the winners.</p>
+              <Link className="soft-button" href="/christmas">Enter Christmas World</Link>
             </div>
           </div>
         </div>
@@ -96,7 +97,7 @@ export default function HomePage() {
           <div className="eyebrow">Christmas 2026</div>
           <h2>A calmer place to find small gifts people may actually use.</h2>
           <p>Budget collections, native-material Christmas pieces, kids’ gifts, useful home finds, and tiny test drops — without turning the whole store into a red SALE poster.</p>
-          <Link className="button" href="/browse?lane=seasonal">Preview Christmas Finds ({christmasProducts.length})</Link>
+          <Link className="button" href="/christmas">Enter Christmas World ({christmasProducts.length} pilot finds)</Link>
         </div>
       </section>
     </>

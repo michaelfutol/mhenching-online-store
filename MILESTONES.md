@@ -1,333 +1,368 @@
 # Mhenching Online Store — Milestone Map
 
-**Purpose:** At any point, this file should answer three questions:
+**Purpose:** At any point this file must answer:
 
 1. What are we building?
 2. Where are we now?
-3. What must be true before we move to the next milestone?
+3. What is the next gate?
+4. What is blocking a real Christmas launch?
 
-Status legend: ✅ Done · 🟢 In progress · 🟡 Planned/partially designed · ⬜ Not started · 🔒 Gate/hold
+Status: ✅ Done · 🟢 In progress · 🟡 Designed/partially built · ⬜ Not started · 🔒 External/approval gate
 
 ---
 
-## Milestone 0 — Product Foundation ✅
+## M0 — Product Foundation ✅ 100%
 
-**Goal:** Lock the product, repo boundaries, design language and safety rules before production code.
+**Goal:** lock product direction, repo boundaries, design language and safety doctrine.
 
-- ✅ Dedicated `mhenching-online-store` repository
-- ✅ Physical POS kept in separate `mhenching-store-system` repository
-- ✅ Canonical PRD
+- ✅ dedicated `mhenching-online-store` repository
+- ✅ physical POS remains in separate `mhenching-store-system`
+- ✅ canonical PRD
 - ✅ Quiet Commerce / Quiet Tropical Morning design system
-- ✅ Stitch export reviewed and constrained
-- ✅ POS Inventory Bridge contract drafted
-- ✅ Online commerce data model drafted
-- ✅ ADR: POS and online store stay separate
-- ✅ Agent guardrails in `AGENTS.md`
+- ✅ Stitch reference constrained by PRD/architecture
+- ✅ POS Inventory Bridge contract
+- ✅ online commerce data model
+- ✅ ADR: POS and online store remain separate
+- ✅ `AGENTS.md` guardrails
+- ✅ Overkill-underneath / Simplest-form-on-top doctrine
 
-**Exit gate:** Product/business rules are documented and POS protection is explicit.
+**Gate:** passed.
 
 ---
 
-## Milestone 1 — Storefront Shell 🟢
+## M1 — Storefront Shell 🟢 90%
 
-**Goal:** Produce the first usable customer-facing shopping experience with mock data only.
+**Goal:** beautiful mobile-first shopping shell independent of production data.
 
-Branch: `phase-1-storefront-shell`  
-PR: #2
+Integrated into `main` via Phase 1.
 
-- ✅ Next.js storefront scaffold
-- ✅ Mobile-first Quiet Commerce theme
+- ✅ Next.js storefront
 - ✅ Home
 - ✅ Browse/Search
 - ✅ Product Detail
 - ✅ Cart visual flow
 - ✅ Checkout visual flow
-- ✅ Not-found/empty states
-- ✅ Mhenching Finds lane
-- ✅ Gawang Magdalena lane
-- ✅ Seasonal/Christmas lane
-- ✅ Reduced-motion/accessibility basics
-- ✅ GitHub Actions typecheck
-- ✅ GitHub Actions production build
-- 🟡 Visual review against Stitch screens
-- ⬜ Interactive cart state
-- ⬜ Real responsive-device QA
+- ✅ empty/not-found states
+- ✅ Mhenching Finds
+- ✅ Gawang Magdalena
+- ✅ responsive Quiet Commerce styling
+- ✅ reduced-motion basics
+- ✅ CI: TypeScript + production build
+- ✅ global resident-attendant mount added on current working branch
+- ⬜ interactive persistent cart
+- ⬜ real-device visual QA / final Stitch comparison
 
-**Exit gate:** UI is approved on mobile and desktop, CI green, and no production stock/payment claims are hard-coded.
+**Next gate:** interactive cart + mobile/desktop visual acceptance.
 
 ---
 
-## Milestone 2 — Online Commerce Backend 🟢
+## M2 — Online Commerce Backend 🟢 50%
 
-**Goal:** Build a standalone online commerce backend without touching the physical POS database.
+**Goal:** standalone online commerce backend with no direct POS database access.
 
-Branch: `phase-2-commerce-backend`  
-PR: #4
+Foundation integrated into `main`.
 
-- ✅ Backend architecture plan
-- ✅ Public catalog / private commerce boundary
-- ✅ Review-only SQL schema draft
-- ✅ RLS/security baseline
-- ✅ Orders / order items / events model
-- ✅ Reservation records and idempotency fields
-- ✅ Delivery-zone model
-- ✅ Shared TypeScript contracts
-- ✅ Order state machine
-- ✅ Contract typecheck in CI
-- ⬜ Catalog repository interface
-- ⬜ Mock server repository
-- ⬜ Quote service
-- ⬜ Order service
+- ✅ backend architecture plan
+- ✅ public catalog / private commerce boundary
+- ✅ review-only SQL schema draft
+- ✅ RLS/security baseline design
+- ✅ orders / order items / events model
+- ✅ reservations + idempotency contracts
+- ✅ delivery-zone model
+- ✅ shared TypeScript contracts
+- ✅ order state machine
+- ✅ CI coverage for contracts
+- ⬜ dedicated online Supabase project
+- ⬜ applied/reviewed migrations
+- ⬜ catalog repository implementation
+- ⬜ quote service
+- ⬜ order service
 - ⬜ API route handlers
-- ⬜ Unit/integration tests
-- 🔒 Do not apply schema until a dedicated online database is selected
+- ⬜ unit/integration tests
 
-**Exit gate:** Online catalog/order APIs are testable against a separate dev database or mock backend and cannot access the POS database directly.
+**Hard gate:** 🔒 create/select a **separate online Supabase project**; never reuse the physical POS database.
 
 ---
 
-## Milestone 3 — Simplest-Form Admin 🟡
+## M3 — Simplest-Form Admin 🟡 15%
 
-**Goal:** Chingmen and Michael can manage the online shop without needing technical knowledge.
+**Goal:** Chingmen/Michael manage the shop without technical knowledge.
 
-### Quick Add Item
-
-Target experience:
+Primary flow:
 
 **Photo → Name → Price → Stock/availability → Category → Save**
 
-Everything else is optional or auto-suggested.
-
-- ⬜ Mobile-first admin login
+- ✅ workflow/spec locked
+- ⬜ admin authentication
+- ⬜ mobile admin shell
 - ⬜ Quick Add Item
-- ⬜ Camera/photo upload
-- ⬜ Barcode/SKU optional field
-- ⬜ Simple price/cost entry
-- ⬜ Availability mode: in-store / online-only / made-to-order / consignment
-- ⬜ Category/collection suggestions
-- ⬜ Auto-generated short description suggestion
-- ⬜ Maker/local-product toggle
+- ⬜ camera/photo upload
+- ⬜ optional SKU/barcode
+- ⬜ price/cost entry
+- ⬜ availability modes: in-store / online-only / made-to-order / consignment
+- ⬜ category/description suggestions
+- ⬜ maker/local-product toggle
 - ⬜ Draft → Preview → Publish
-- ⬜ Duplicate/edit product
-- ⬜ Bulk price/stock edits
+- ⬜ edit/duplicate/bulk updates
+- ⬜ hidden advanced metadata drawer
 
-### Advanced drawer — hidden unless needed
+**Dependency:** M2 online DB/auth/storage.
 
-- ⬜ supplier/maker
-- ⬜ provenance
-- ⬜ dimensions/weight
-- ⬜ landed cost
-- ⬜ target margin
-- ⬜ international eligibility
-- ⬜ production lead time
-- ⬜ bundle membership
-- ⬜ campaign tags
-
-**Exit gate:** A nontechnical store operator can add and publish a real product on a phone in under roughly one minute, while advanced metadata remains available without cluttering the primary flow.
+**Exit gate:** a nontechnical operator can publish a normal item from a phone in roughly one minute.
 
 ---
 
-## Milestone 4 — POS Inventory Bridge ⬜
+## M4 — POS Inventory Bridge ⬜ 10%
 
-**Goal:** The online store can safely reflect/reserve physical-store inventory without becoming part of the POS application.
+**Goal:** reflect/reserve physical-store stock without coupling ecommerce to POS checkout.
 
-- ⬜ Availability endpoint
-- ⬜ Atomic reservation
-- ⬜ Reservation expiry/release
-- ⬜ Confirmation/commit path
-- ⬜ Idempotency
-- ⬜ Audit log
-- ⬜ Reconciliation job
-- ⬜ Failure/degraded mode
-- ⬜ Integration tests against POS sandbox/dev copy
-- 🔒 No direct ecommerce writes to POS inventory tables
+- ✅ integration contract drafted
+- ⬜ POS-side availability service
+- ⬜ atomic reservation
+- ⬜ reservation expiry/release
+- ⬜ confirmation/commit
+- ⬜ idempotency implementation
+- ⬜ audit log
+- ⬜ reconciliation
+- ⬜ degraded mode
+- ⬜ sandbox integration tests
 
-**Exit gate:** Concurrent online orders cannot oversell stock; online failures do not prevent physical checkout.
+**Hard rule:** ecommerce never writes directly to POS stock tables.
+
+**Exit gate:** simultaneous online orders cannot oversell the final unit and website failure cannot stop physical sales.
 
 ---
 
-## Milestone 5 — Real Checkout + Local Fulfillment ⬜
+## M5 — Checkout, Manual Payment & Local Fulfillment 🟢 35%
 
-**Goal:** Real customers in Sta. Magdalena can complete orders safely.
+**Goal:** complete a real Sta. Magdalena order without percentage-cut payment gateways.
 
-- ⬜ Guest checkout
-- ⬜ Cash on delivery
-- ⬜ Cash on pickup
-- ⬜ approved QR/digital-payment flow
-- ⬜ pickup workflow
-- ⬜ delivery zones/fees
+### MVP payment rails
+
+- ✅ Cash on Pickup selected
+- ✅ COD policy selected for approved local zones, initially Magdalena Poblacion
+- ✅ Manual GCash selected
+- ✅ Official manual QR selected
+- ✅ screenshot-is-not-proof rule
+- ✅ payment verification state model/contracts
+- ✅ review-only manual-payment schema addendum
+- ✅ checkout UI aligned with manual GCash/QR/COD policy
+- ⬜ real guest-order submission
+- ⬜ official GCash/QR admin configuration
+- ⬜ payment-reference submission
+- ⬜ private proof upload
+- ⬜ staff Verify / Reject / Ask Customer queue
+- ⬜ COD collection reconciliation
 - ⬜ order confirmation/status
+- ⬜ delivery-zone fees
 - ⬜ staff order board
-- ⬜ cancellation/refund rules
-- ⬜ proof of delivery later
 
-**Exit gate:** One real end-to-end test order can move from product page to completed pickup/delivery with correct inventory reconciliation.
+**Dependencies:** M2 database + M4 bridge for physical-stock-backed products.
+
+**Exit gate:** one real local order reaches completed pickup/delivery with correct stock and payment reconciliation.
 
 ---
 
-## Milestone 6 — Admin Analytics ⬜
+## M5B — Resident Customer Attendant 🟢 65%
 
-**Goal:** Management sees what is selling, why, and what needs action without reading raw reports.
+**Goal:** an always-available calm front desk that helps without hallucinating operational facts.
 
-### First screen should answer:
+Current working branch: `phase-5-resident-attendant`.
+
+- ✅ global chat widget
+- ✅ resident API route
+- ✅ catalog retrieval
+- ✅ budget gift queries
+- ✅ Christmas discovery
+- ✅ Gawang Magdalena discovery
+- ✅ payment-policy answers
+- ✅ delivery/pickup answers
+- ✅ sensitive-case detection
+- ✅ human-handoff flag
+- ✅ no paid model required for v1
+- ✅ future Ollama/model role documented
+- ⬜ live order-status tool with verified lookup
+- ⬜ actual human handoff queue/inbox
+- ⬜ conversation persistence + privacy/retention controls
+- ⬜ live payment-state tool
+- ⬜ Intern Lum classifier/paraphraser evaluation
+- ⬜ Messenger/other channel integration later
+
+**Doctrine:** LLM may interpret/draft; tools remain source of truth for stock, payment and orders.
+
+**Exit gate:** common customer questions are answered correctly 24/7 and sensitive cases reach a human with context.
+
+---
+
+## M6 — Admin Analytics ⬜ 10%
+
+**Goal:** first screen tells management what needs attention.
+
+Target first screen:
 
 - Sales today
 - Orders waiting
 - Best sellers
 - Slow movers
 - Low stock
-- Products people searched for but we do not sell
-- Campaigns converting best
-- Gross margin estimate
-- Delivery/pickup mix
+- Searches with no result
+- Best-converting campaign
+- Estimated gross margin
+- pickup/delivery mix
 
-- ⬜ KPI dashboard
-- ⬜ date filters
+- ✅ KPI definition drafted
+- ⬜ analytics dashboard
 - ⬜ product performance
 - ⬜ funnel conversion
 - ⬜ campaign attribution
 - ⬜ no-result searches
 - ⬜ margin/profitability
-- ⬜ local-maker sales
-- ⬜ Christmas/seasonal dashboard
-- ⬜ downloadable summaries
+- ⬜ Gawang Magdalena performance
+- ⬜ Christmas dashboard
 
-**Exit gate:** Chingmen/Michael can make a reorder, promotion or kill-product decision from the dashboard without exporting data first.
+**Dependency:** live order/event data from M2/M5.
 
 ---
 
-## Milestone 7 — Mhenching Radar / Agent Product Finder ⬜
+## M7 — Mhenching Radar / Agent Product Finder ⬜ 15%
 
-**Goal:** Continuously discover cheap, meaningful, locally relevant and commercially promising products.
+**Goal:** continuously discover cheap, meaningful, locally relevant products and local makers.
 
-### Inputs
-
-- internal searches with no result
-- customer requests
-- sales/returns
-- supplier catalogs
-- wholesale offers
-- approved marketplace/trend signals
-- local maker submissions
-- seasonal opportunities
-
-### Outputs
-
-- candidate product
-- source/supplier
-- landed-cost estimate
-- target selling price
-- margin estimate
-- usefulness
-- novelty locally
-- demo/wow factor
-- return/safety risk
-- test quantity recommendation
-- evidence links/notes
-
+- ✅ Mhenching Product Score framework
+- ✅ separate Gawang Magdalena scoring philosophy
+- ✅ candidate workflow designed
 - ⬜ candidate board
-- ⬜ Mhenching Product Score
-- ⬜ Gawang Magdalena score
 - ⬜ supplier/maker registry
-- ⬜ test-drop workflow
+- ⬜ landed-cost calculator
+- ⬜ internal unmet-search signals
+- ⬜ supplier/wholesale ingestion
+- ⬜ local maker submissions
+- ⬜ trend research connectors
+- ⬜ 3–5 unit test-drop workflow
 - ⬜ reorder/kill recommendation
-- ⬜ price-change watch
-- ⬜ human approval gate
+- ⬜ price watch
+- ⬜ human approval gate implementation
 
-**Hard rule:** An agent may recommend and prepare a listing, but cannot autonomously purchase inventory or publish a supplier claim without human approval.
+**Hard rule:** agent may recommend/draft; it cannot autonomously buy inventory.
 
 ---
 
-## Milestone 8 — Lum App Administrator / MCP ⬜
+## M8 — Lum Admin / MCP 🟡 15%
 
-**Goal:** Expose safe administrative tools so Lum/authorized agents in Work/Codex can operate the application without broad database access.
+**Goal:** authorized Lum/agents operate Mhenching through scoped tools, never raw database superpowers.
 
-Candidate MCP tools:
-
-- `search_products`
-- `get_product`
-- `create_product_draft`
-- `update_product_draft`
-- `publish_product` — permission-gated
-- `get_inventory_status`
-- `get_orders`
-- `get_order`
-- `update_fulfillment_status`
-- `get_sales_summary`
-- `get_low_stock`
-- `get_no_result_searches`
-- `get_radar_candidates`
-- `create_radar_candidate`
-- `score_candidate`
-- `prepare_campaign_draft`
-
-### Permission model
-
-- Read-only analytics: broadest safe scope
-- Draft creation: allowed for authorized agent
-- Publish/price change: explicit elevated scope
-- Refund/cancel/order mutation: stronger scope + audit
-- Inventory purchase: human approval only
-- POS mutation: never direct
-
-- ⬜ MCP server design
-- ⬜ scoped service identity
-- ⬜ audit trail
-- ⬜ rate limits
-- ⬜ tool schemas
+- ✅ tool/permission philosophy documented
+- ✅ candidate tool list documented
+- ✅ audit/approval doctrine
+- ⬜ MCP server
+- ⬜ service identity/scopes
+- ⬜ read tools: products/orders/analytics/Radar
+- ⬜ draft-write tools
+- ⬜ elevated publish/price/order tools
+- ⬜ rate limits/audit trail
 - ⬜ Work/Codex connection test
-- ⬜ administrator runbook
 
-**Exit gate:** Lum can safely inspect the shop and perform approved admin workflows through tools, with every write attributable and reversible where practical.
+**Exit gate:** Lum can safely inspect and perform approved admin workflows with attributable writes.
 
 ---
 
-## Milestone 9 — Christmas 2026 Golden Commercial Validation ⬜
+## M8A — Local LLM Intern / Ollama 🟡 15%
 
-**Goal:** Use Christmas as the first real product-discovery + funnel + fulfillment stress test.
+**Goal:** small local model handles junior repetitive work under Lum/human supervision.
+
+- ✅ role and limits defined
+- ✅ RAG + approved examples + correction/eval learning model defined
+- ✅ suitable responsibilities defined
+- ⬜ Ollama model installed/benchmarked
+- ⬜ Mhenching knowledge pack
+- ⬜ eval suite
+- ⬜ classifier/product-copy tasks
+- ⬜ admin-summary tasks
+- ⬜ escalation confidence rules
+
+**Initial role:** classification, normalization, draft copy, candidate prescoring, conversation handoff summaries.
+
+---
+
+## M9 — Paskong Mhenching 2026 Golden Launch 🟢 35%
+
+**Goal:** first grand public launch and first end-to-end commercial validation.
+
+### Experience
+
+- ✅ dedicated `/christmas` Christmas World page
+- ✅ gentle falling snow
+- ✅ tiny multicolored softly blinking lights
+- ✅ Gentle / Off magic control
+- ✅ reduced-motion behavior
+- ✅ mobile density reduction
+- ✅ no Santa/reindeer/noisy effects
+- ✅ Quiet Commerce identity preserved
+- ⬜ real photographer product imagery
+- ⬜ final Christmas UI/UX visual QA
+
+### Commerce
 
 - ⬜ scout ~100 candidates
-- ⬜ shortlist and score
-- ⬜ sample 3–5 units of strongest candidates
-- ⬜ Christmas collections under ₱100/₱200/₱300
-- ⬜ bundles/mystery boxes
-- ⬜ demo/reel links
-- ⬜ source attribution
+- ⬜ shortlist/score
+- ⬜ 3–5 unit test drops
+- ⬜ under ₱100 / ₱200 / ₱300 real collections
+- ⬜ bundles / mystery boxes
+- ⬜ campaign attribution
+- ⬜ real checkout/fulfillment
 - ⬜ sell-through analytics
-- ⬜ reorder winners
-- ⬜ kill weak products quickly
-- ⬜ Gawang Magdalena Christmas collection
+- ⬜ Gawang Magdalena Christmas collection with real makers
 
-**Exit gate:** We can identify which products/content/campaigns generated profitable demand and feed those learnings back into Radar.
+**Exit gate:** Christmas customers can discover, order, pay/receive, and the team can tell which products/content actually generated profitable demand.
 
 ---
 
-## Milestone 10 — Provincial + International Local Products ⬜
+## M10 — Provincial + International Gawang Magdalena ⬜ 15%
 
-**Goal:** Expand appropriate products beyond Sta. Magdalena without compromising maker economics or compliance.
+**Goal:** expand eligible local goods beyond Sta. Magdalena without compromising maker economics/compliance.
 
+- ✅ export-readiness statuses/spec drafted
+- ✅ finished handicrafts prioritized first
 - ⬜ Sorsogon Province shipping
-- ⬜ Philippines-wide shipping for suitable goods
+- ⬜ Philippines-wide shipping
 - ⬜ packaging/weight classes
 - ⬜ maker lead times
-- ⬜ export-ready product metadata
+- ⬜ real export-ready metadata
 - ⬜ English maker stories
-- ⬜ international shipping eligibility flags
-- ⬜ customs/material/food compliance gates
-
-**Exit gate:** At least one eligible Gawang Magdalena product can be ordered outside the local delivery area with accurate landed shipping expectations and documented maker provenance.
+- ⬜ commodity/country compliance checks
+- ⬜ first verified international-ready SKU
 
 ---
 
-# Current position
+# Current position — 19 Aug 2026
 
-**Foundation:** complete.  
-**Storefront:** built and CI-green, awaiting visual review/merge.  
-**Backend:** contract/schema foundation built and CI-green on stacked branch.  
-**Next operational priority:** simplest-form Admin + real online backend APIs, then isolated POS Inventory Bridge.
+### Integrated in `main`
+
+- **M0 Foundation:** ✅ complete
+- **M1 Storefront shell:** integrated and CI-green
+- **M2 Backend foundation:** integrated and CI-green
+
+### Active working branch
+
+`phase-5-resident-attendant`
+
+Contains:
+
+- resident chat attendant v1
+- manual GCash/QR/COD contract/schema refinements
+- checkout-policy alignment
+- Christmas World page + ambient Christmas effects
+
+### Critical path to real Christmas launch
+
+**Create separate online Supabase → M2 live APIs → M3 Quick Add Admin → M4 POS bridge → M5 real local order/payment → M6 analytics → stock real Christmas products/photos → launch.**
+
+### One external gate right now
+
+🔒 A dedicated online Supabase project must be created/selected before we can safely persist users, products, orders, chat handoffs and manual-payment verification.
 
 # Development doctrine
 
 > **Overkill underneath. Simplest form on top.**
 
-The system may be sophisticated internally, but the human workflow should always expose the smallest number of decisions necessary to complete the job safely.
+Internal systems may be sophisticated. Chingmen and customers should see only the few decisions needed to complete the job safely.
