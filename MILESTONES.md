@@ -34,7 +34,7 @@ Status: ✅ Done · 🟢 In progress · 🟡 Designed/partially built · ⬜ Not
 
 **Goal:** beautiful mobile-first shopping shell independent of production data.
 
-Integrated into `main` via Phase 1.
+Integrated into `main`.
 
 - ✅ Next.js storefront
 - ✅ Home
@@ -48,7 +48,7 @@ Integrated into `main` via Phase 1.
 - ✅ responsive Quiet Commerce styling
 - ✅ reduced-motion basics
 - ✅ CI: TypeScript + production build
-- ✅ global resident-attendant mount added on current working branch
+- ✅ global resident-attendant mount
 - ⬜ interactive persistent cart
 - ⬜ real-device visual QA / final Stitch comparison
 
@@ -80,35 +80,40 @@ Foundation integrated into `main`.
 - ⬜ API route handlers
 - ⬜ unit/integration tests
 
-**Hard gate:** 🔒 create/select a **separate online Supabase project**; never reuse the physical POS database.
+**Hard gate:** 🔒 create/select a **separate online Supabase project**; never reuse the physical POS database. Tracked in issue #17.
 
 ---
 
-## M3 — Simplest-Form Admin 🟡 15%
+## M3 — Simplest-Form Admin 🟢 40%
 
-**Goal:** Chingmen/Michael manage the shop without technical knowledge.
+**Goal:** Chingmen/Michael manage the shop without needing technical knowledge.
 
 Primary flow:
 
-**Photo → Name → Price → Stock/availability → Category → Save**
+**Photo → Name → Price → Stock/availability → Category → Preview → Publish**
 
 - ✅ workflow/spec locked
-- ⬜ admin authentication
-- ⬜ mobile admin shell
-- ⬜ Quick Add Item
-- ⬜ camera/photo upload
-- ⬜ optional SKU/barcode
-- ⬜ price/cost entry
-- ⬜ availability modes: in-store / online-only / made-to-order / consignment
-- ⬜ category/description suggestions
-- ⬜ maker/local-product toggle
-- ⬜ Draft → Preview → Publish
+- ✅ server-gated `/admin` preview route
+- ✅ preview disabled by default in production
+- ✅ phone camera/photo chooser
+- ✅ Quick Add Item fields
+- ✅ price entry
+- ✅ stock/capacity entry
+- ✅ availability: in-store / online-only / made-to-order / consignment
+- ✅ lane/category selection
+- ✅ deterministic description suggestion
+- ✅ hidden optional/advanced section
+- ✅ live customer-card preview
+- ⬜ Supabase authentication + staff roles
+- ⬜ real photo upload/storage
+- ⬜ real Create Draft
+- ⬜ Preview → Publish
 - ⬜ edit/duplicate/bulk updates
-- ⬜ hidden advanced metadata drawer
+- ⬜ supplier/maker/provenance/economics advanced fields
 
 **Dependency:** M2 online DB/auth/storage.
 
-**Exit gate:** a nontechnical operator can publish a normal item from a phone in roughly one minute.
+**Exit gate:** a nontechnical operator can publish a real product from a phone in roughly one minute.
 
 ---
 
@@ -167,7 +172,7 @@ Primary flow:
 
 **Goal:** an always-available calm front desk that helps without hallucinating operational facts.
 
-Current working branch: `phase-5-resident-attendant`.
+Integrated into `main`.
 
 - ✅ global chat widget
 - ✅ resident API route
@@ -224,24 +229,29 @@ Target first screen:
 
 ---
 
-## M7 — Mhenching Radar / Agent Product Finder ⬜ 15%
+## M7 — Mhenching Radar / Agent Product Finder 🟢 40%
 
 **Goal:** continuously discover cheap, meaningful, locally relevant products and local makers.
 
 - ✅ Mhenching Product Score framework
 - ✅ separate Gawang Magdalena scoring philosophy
-- ✅ candidate workflow designed
-- ⬜ candidate board
+- ✅ deterministic weighted scoring package
+- ✅ landed-cost calculator
+- ✅ gross contribution / margin / markup calculation
+- ✅ `TEST_NOW / SAMPLE_WATCH / WEAK_MAYBE / IGNORE` recommendations
+- ✅ default 3–5 unit test guidance
+- ✅ fair-maker-economics protection for local goods
+- ✅ strict TypeScript CI
+- ✅ architecture documentation
+- ⬜ candidate board/persistence
 - ⬜ supplier/maker registry
-- ⬜ landed-cost calculator
 - ⬜ internal unmet-search signals
 - ⬜ supplier/wholesale ingestion
 - ⬜ local maker submissions
 - ⬜ trend research connectors
-- ⬜ 3–5 unit test-drop workflow
-- ⬜ reorder/kill recommendation
+- ⬜ test-drop sales/content feedback
 - ⬜ price watch
-- ⬜ human approval gate implementation
+- ⬜ human purchase approval workflow
 
 **Hard rule:** agent may recommend/draft; it cannot autonomously buy inventory.
 
@@ -284,7 +294,7 @@ Target first screen:
 
 ---
 
-## M9 — Paskong Mhenching 2026 Golden Launch 🟢 35%
+## M9 — Paskong Mhenching 2026 Golden Launch 🟢 40%
 
 **Goal:** first grand public launch and first end-to-end commercial validation.
 
@@ -298,13 +308,15 @@ Target first screen:
 - ✅ mobile density reduction
 - ✅ no Santa/reindeer/noisy effects
 - ✅ Quiet Commerce identity preserved
+- ✅ budget-discovery entry cards
+- ✅ Gawang Magdalena Christmas story lane
 - ⬜ real photographer product imagery
 - ⬜ final Christmas UI/UX visual QA
 
 ### Commerce
 
 - ⬜ scout ~100 candidates
-- ⬜ shortlist/score
+- ⬜ shortlist/score with Radar
 - ⬜ 3–5 unit test drops
 - ⬜ under ₱100 / ₱200 / ₱300 real collections
 - ⬜ bundles / mystery boxes
@@ -336,30 +348,24 @@ Target first screen:
 
 # Current position — 19 Aug 2026
 
-### Integrated in `main`
+### Integrated and CI-green in `main`
 
-- **M0 Foundation:** ✅ complete
-- **M1 Storefront shell:** integrated and CI-green
-- **M2 Backend foundation:** integrated and CI-green
-
-### Active working branch
-
-`phase-5-resident-attendant`
-
-Contains:
-
-- resident chat attendant v1
-- manual GCash/QR/COD contract/schema refinements
-- checkout-policy alignment
-- Christmas World page + ambient Christmas effects
+- **M0 Foundation:** ✅ 100%
+- **M1 Storefront shell:** 🟢 90%
+- **M2 Backend contracts/schema foundation:** 🟢 50%
+- **M3 Quick Add UX preview:** 🟢 40%
+- **M5 manual-payment/checkout foundation:** 🟢 35%
+- **M5B Resident Attendant v1:** 🟢 65%
+- **M7 Radar scoring/economics engine:** 🟢 40%
+- **M9 Christmas World experience foundation:** 🟢 40%
 
 ### Critical path to real Christmas launch
 
-**Create separate online Supabase → M2 live APIs → M3 Quick Add Admin → M4 POS bridge → M5 real local order/payment → M6 analytics → stock real Christmas products/photos → launch.**
+**Create separate online Supabase → M2 live APIs → M3 real auth/save/publish → M4 POS bridge → M5 real local order/payment → M6 analytics → stock real Christmas products/photos → final QA → launch.**
 
 ### One external gate right now
 
-🔒 A dedicated online Supabase project must be created/selected before we can safely persist users, products, orders, chat handoffs and manual-payment verification.
+🔒 **Issue #17:** create the dedicated online Supabase project before persisting users, products, orders, payment proofs, chat handoffs or admin writes.
 
 # Development doctrine
 
