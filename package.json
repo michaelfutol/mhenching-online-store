@@ -1,0 +1,12 @@
+{
+  "name": "mhenching-online-store",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "npm --workspace @mhenching/storefront run dev",
+    "build": "npm --workspace @mhenching/storefront run build",
+    "start": "npm --workspace @mhenching/storefront run start",
+    "typecheck": "npm --workspace @mhenching/storefront run typecheck"
+  }
+}
