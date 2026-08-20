@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Plus_Jakarta_Sans } from "next/font/google";
+import { AttributionCapture } from "@/components/AttributionCapture";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ResidentChat } from "@/components/ResidentChat";
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${heading.variable} ${body.variable}`}>
       <body>
         <CartProvider>
+          <AttributionCapture />
           <Header />
           <main>{children}</main>
           <Footer />
